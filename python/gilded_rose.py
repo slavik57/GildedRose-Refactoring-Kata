@@ -10,18 +10,17 @@ class GildedRose(object):
 
     def update_quality(self):
         for item_aging in self.item_agers:
-            self.update_item_quality(item_aging.item)
+            self.update_item_quality(item_aging.item, item_aging)
 
     @staticmethod
     def is_quality_increasing_item(item):
         return item.name == "Aged Brie" or item.name == "Backstage passes to a TAFKAL80ETC concert"
 
-    def update_item_quality(self, item):
+    def update_item_quality(self, item, item_aging):
         if self.is_quality_increasing_item(item):
             self.increase_item_quality(item)
-        else:
-            if item.name != "Sulfuras, Hand of Ragnaros":
-                self.regular_item_decrease_quality(item)
+        elif item.name != "Sulfuras, Hand of Ragnaros":
+            item_aging.age_item_by_day()
         if item.name != "Sulfuras, Hand of Ragnaros":
             item.sell_in = item.sell_in - 1
         if item.sell_in < 0:
@@ -46,11 +45,6 @@ class GildedRose(object):
     @staticmethod
     def increase_quality_by(item, quality_to_add):
         item.quality = min(item.quality + quality_to_add, MAX_ITEM_QUALITY)
-
-    @staticmethod
-    def regular_item_decrease_quality(item):
-        if item.quality > 0:
-            item.quality = item.quality - 1
 
     @staticmethod
     def update_after_sell_in_date(item):
