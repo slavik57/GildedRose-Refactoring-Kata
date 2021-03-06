@@ -16,17 +16,13 @@ class GildedRose(object):
             return SulfurasAging(item)
         if item.name == "Backstage passes to a TAFKAL80ETC concert":
             return BackstagePassImprover(item)
-        if GildedRose.is_quality_increasing_item(item):
+        if item.name == "Aged Brie":
             return ItemImprover(item)
         return ItemAging(item)
 
     def update_quality(self):
         for item_aging in self.item_agers:
             self.update_item_quality(item_aging.item, item_aging)
-
-    @staticmethod
-    def is_quality_increasing_item(item):
-        return item.name == "Aged Brie" or item.name == "Backstage passes to a TAFKAL80ETC concert"
 
     def update_item_quality(self, item, item_aging):
         item_aging.age_item_by_day()
