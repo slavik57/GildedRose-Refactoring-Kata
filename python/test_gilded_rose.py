@@ -8,24 +8,51 @@ from items.backstage_passes import BackstagePasses
 from items.sulfuras import Sulfuras
 
 
-class GildedRoseTest(unittest.TestCase):
+class RegularItemTest(unittest.TestCase):
     def setUp(self) -> None:
         self.initial_sell_in = 16
         self.current_sell_in = self.initial_sell_in
         self.initial_quality = 30
 
         self.item = Item("Some item", sell_in=self.initial_sell_in, quality=self.initial_quality)
-        self.sulfuras = Sulfuras()
         self.item_with_zero_quality = Item("Zero quality item", sell_in=self.initial_sell_in, quality=0)
+        self.item_with_zero_sell_in = Item("Zero sell in", sell_in=0, quality=self.initial_quality)
+
+        self.items = [
+            self.item,
+            self.item_with_zero_quality,
+            self.item_with_zero_sell_in
+        ]
+
+        gilded_rose = GildedRose(self.items)
+        gilded_rose.update_quality()
+
+    def test_item_lowers_sell_in_and_quality(self):
+        self.assertEqual(self.item.sell_in, self.initial_sell_in - 1)
+        self.assertEqual(self.item.quality, self.initial_quality - 1)
+
+    def test_quality_is_not_negative(self):
+        self.assertEqual(self.item_with_zero_quality.quality, 0)
+
+    def test_item_quality_degrades_by_2_after_sell_in(self):
+        self.assertEqual(self.item_with_zero_sell_in.sell_in, -1)
+        self.assertEqual(self.item_with_zero_sell_in.quality, self.initial_quality - 2)
+
+
+class GildedRoseTest(unittest.TestCase):
+    def setUp(self) -> None:
+        self.initial_sell_in = 16
+        self.current_sell_in = self.initial_sell_in
+        self.initial_quality = 30
+
+        self.sulfuras = Sulfuras()
         self.aged_brie = AgedBrie(sell_in=self.initial_sell_in, quality=self.initial_quality)
         self.max_quality = AgedBrie(sell_in=self.initial_sell_in, quality=50)
         self.backstage_passes = BackstagePasses(sell_in=self.initial_sell_in, quality=self.initial_quality)
         self.conjured = Conjured(sell_in=self.initial_sell_in, quality=self.initial_quality)
 
         self.items = [
-            self.item,
             self.sulfuras,
-            self.item_with_zero_quality,
             self.aged_brie,
             self.max_quality,
             self.backstage_passes,
@@ -44,13 +71,6 @@ class GildedRoseTest(unittest.TestCase):
         self.assertEqual(Sulfuras().quality, 80)
         self.assertEqual(self.sulfuras.sell_in, Sulfuras().sell_in)
         self.assertEqual(self.sulfuras.quality, Sulfuras().quality)
-
-    def test_item_lowers_sell_in_and_quality(self):
-        self.assertEqual(self.item.sell_in, self.initial_sell_in - 1)
-        self.assertEqual(self.item.quality, self.initial_quality - 1)
-
-    def test_quality_is_not_negative(self):
-        self.assertEqual(self.item_with_zero_quality.quality, 0)
 
     def test_aged_brie_quality_goes_up(self):
         self.assertEqual(self.aged_brie.quality, self.initial_quality + 1)
@@ -86,16 +106,6 @@ class GildedRoseTest(unittest.TestCase):
         self.assertEqual(self.backstage_passes.sell_in, -1)
         self.assertEqual(self.backstage_passes.quality, 0)
 
-    def test_item_quality_degrades_by_2_after_sell_in(self):
-        self.update_until_sell_in_is(0)
-
-        current_quality = self.item.quality
-        self.assertGreater(current_quality, 0)
-
-        self.update_until_sell_in_is(-1)
-        self.assertEqual(self.item.sell_in, -1)
-        self.assertEqual(self.item.quality, current_quality - 2)
-
     def test_backstage_passes_max_quality(self):
         self.update_until_sell_in_is(1)
         self.assertEqual(self.backstage_passes.quality, 50)
@@ -121,6 +131,7 @@ class GildedRoseTest(unittest.TestCase):
         self.gilded_rose.update_quality()
         self.assertEqual(self.conjured.sell_in, -1)
         self.assertEqual(self.conjured.quality, 4)
+
 
 if __name__ == '__main__':
     unittest.main()
