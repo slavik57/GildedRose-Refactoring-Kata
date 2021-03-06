@@ -8,12 +8,12 @@ class ItemAging:
         if self.item.sell_in < 0:
             self._update_quality_after_sell_in()
         else:
-            self._update_quality()
+            self._update_quality_before_sell_in()
 
     def _update_sell_in(self):
         self.item.sell_in = self.item.sell_in - 1
 
-    def _update_quality(self):
+    def _update_quality_before_sell_in(self):
         self._reduce_quality_by(1)
 
     def _reduce_quality_by(self, amount):

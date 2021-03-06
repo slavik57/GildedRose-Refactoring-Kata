@@ -5,7 +5,7 @@ class BackstagePassImprover(ItemImprover):
     def __init__(self, item):
         super(BackstagePassImprover, self).__init__(item)
 
-    def _update_quality(self):
+    def _update_quality_before_sell_in(self):
         if self.item.sell_in < 5:
             self._increase_quality_by(3)
         elif self.item.sell_in < 10:
