@@ -11,9 +11,8 @@ class GildedRose(object):
 
     def update_item_quality(self, item):
         if item.name != "Aged Brie" and item.name != "Backstage passes to a TAFKAL80ETC concert":
-            if item.quality > 0:
-                if item.name != "Sulfuras, Hand of Ragnaros":
-                    self.regular_item_decrease_quality(item)
+            if item.name != "Sulfuras, Hand of Ragnaros":
+                self.regular_item_decrease_quality(item)
         else:
             if item.quality < 50:
                 item.quality = item.quality + 1
@@ -31,7 +30,8 @@ class GildedRose(object):
 
     @staticmethod
     def regular_item_decrease_quality(item):
-        item.quality = item.quality - 1
+        if (item.quality > 0):
+            item.quality = item.quality - 1
 
     @staticmethod
     def update_after_sell_in_date(item):
