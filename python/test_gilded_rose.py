@@ -10,11 +10,13 @@ class GildedRoseTest(unittest.TestCase):
         self.item = Item("Some item", sell_in=10, quality=4)
         self.sulfuras = Sulfuras()
         self.item_with_zero_quality = Item("Zero quality item", sell_in=10, quality=0)
+        self.aged_brie = Item("Aged Brie", sell_in=10, quality=11)
 
         self.items = [
             self.item,
             self.sulfuras,
-            self.item_with_zero_quality
+            self.item_with_zero_quality,
+            self.aged_brie
         ]
 
         gilded_rose = GildedRose(self.items)
@@ -29,6 +31,9 @@ class GildedRoseTest(unittest.TestCase):
 
     def test_quality_is_not_negative(self):
         self.assertEquals(self.item_with_zero_quality.quality, 0)
+
+    def test_aged_brie_quality_goes_up(self):
+        self.assertEquals(self.aged_brie.quality, 12)
 
 if __name__ == '__main__':
     unittest.main()
