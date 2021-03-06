@@ -24,16 +24,7 @@ class GildedRose(object):
 
     def update_quality(self):
         for item_aging in self.item_agers:
-            self.update_item_quality(item_aging.item, item_aging)
-
-    def update_item_quality(self, item, item_aging):
-        item_aging.age_item_by_day()
-        if item.sell_in < 0:
-            self.update_after_sell_in_date(item, item_aging)
-
-    @staticmethod
-    def update_after_sell_in_date(item, item_aging):
-        item_aging.update_after_sell_in_date()
+            item_aging.age_item_by_day()
 
 
 class Item:
