@@ -34,5 +34,5 @@ V - Aged Brie goes up in quality
 V - quality is limited
 V - backstage passes quality
 V - backstage passes quality for 10 left days or less increases by 2
-backstage passes quality for 5 left days or less increases by 3
+V - backstage passes quality for 5 left days or less increases by 3
 backstage passes quality drops to 0 when days left is 0

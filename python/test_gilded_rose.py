@@ -66,5 +66,13 @@ class GildedRoseTest(unittest.TestCase):
         self.assertEquals(self.backstage_passes.sell_in, 9)
         self.assertEquals(self.backstage_passes.quality, current_quality + 2)
 
+    def test_backstage_passes_with_5_left_days(self):
+        self.update_until_sell_in_is(5)
+        current_quality = self.backstage_passes.quality
+        self.update_until_sell_in_is(4)
+
+        self.assertEquals(self.backstage_passes.sell_in, 4)
+        self.assertEquals(self.backstage_passes.quality, current_quality + 3)
+
 if __name__ == '__main__':
     unittest.main()
