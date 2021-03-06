@@ -27,6 +27,6 @@ legendary item and as such its Quality is 80 and it never alters.
 
 
 Tests:
-V "Sulfuras" does not decrease in quality
+V - "Sulfuras" does not decrease in quality
 Sulfuras equals to other types with same sell in and quality
-Lower sell in and quality for item
+V - Lower sell in and quality for item
