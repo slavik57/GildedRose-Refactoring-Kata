@@ -1,14 +1,8 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from gilded_rose import Item, GildedRose
-
-
-class Sulfuras(Item):
-    def __init__(self):
-        super(Sulfuras, self).__init__("Sulfuras, Hand of Ragnaros", sell_in=10, quality=50)
-    def __eq__(self, other):
-        return self.quality == other.quality and self.sell_in == other.sell_in
+from gilded_rose import GildedRose
+from items.sulfuras import Sulfuras
 
 
 class GildedRoseTest(unittest.TestCase):
