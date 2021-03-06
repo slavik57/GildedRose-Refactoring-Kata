@@ -100,5 +100,12 @@ class GildedRoseTest(unittest.TestCase):
         self.update_until_sell_in_is(0)
         self.assertEqual(self.backstage_passes.quality, 50)
 
+    def test_aged_brie_max_quality(self):
+        self.update_until_sell_in_is(-10)
+        self.assertEqual(self.aged_brie.quality, 50)
+
+        self.update_until_sell_in_is(-11)
+        self.assertEqual(self.aged_brie.quality, 50)
+
 if __name__ == '__main__':
     unittest.main()
