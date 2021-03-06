@@ -11,7 +11,6 @@ from items.sulfuras import Sulfuras
 class RegularItemTest(unittest.TestCase):
     def setUp(self) -> None:
         self.initial_sell_in = 16
-        self.current_sell_in = self.initial_sell_in
         self.initial_quality = 30
 
         self.item = Item("Some item", sell_in=self.initial_sell_in, quality=self.initial_quality)
@@ -39,20 +38,36 @@ class RegularItemTest(unittest.TestCase):
         self.assertEqual(self.item_with_zero_sell_in.quality, self.initial_quality - 2)
 
 
+class SulfrasTest(unittest.TestCase):
+    def setUp(self) -> None:
+        self.initial_sell_in = 16
+        self.initial_quality = 30
+
+        self.sulfuras = Sulfuras()
+
+        self.items = [self.sulfuras]
+
+        gilded_rose = GildedRose(self.items)
+        gilded_rose.update_quality()
+
+    def test_sulfuras_does_not_change(self):
+        self.assertEqual(Sulfuras().quality, 80)
+        self.assertEqual(self.sulfuras.sell_in, Sulfuras().sell_in)
+        self.assertEqual(self.sulfuras.quality, Sulfuras().quality)
+
+
 class GildedRoseTest(unittest.TestCase):
     def setUp(self) -> None:
         self.initial_sell_in = 16
         self.current_sell_in = self.initial_sell_in
         self.initial_quality = 30
 
-        self.sulfuras = Sulfuras()
         self.aged_brie = AgedBrie(sell_in=self.initial_sell_in, quality=self.initial_quality)
         self.max_quality = AgedBrie(sell_in=self.initial_sell_in, quality=50)
         self.backstage_passes = BackstagePasses(sell_in=self.initial_sell_in, quality=self.initial_quality)
         self.conjured = Conjured(sell_in=self.initial_sell_in, quality=self.initial_quality)
 
         self.items = [
-            self.sulfuras,
             self.aged_brie,
             self.max_quality,
             self.backstage_passes,
@@ -66,11 +81,6 @@ class GildedRoseTest(unittest.TestCase):
         while self.current_sell_in > target_sell_in:
             self.gilded_rose.update_quality()
             self.current_sell_in -= 1
-
-    def test_sulfuras_does_not_decrease_quality(self):
-        self.assertEqual(Sulfuras().quality, 80)
-        self.assertEqual(self.sulfuras.sell_in, Sulfuras().sell_in)
-        self.assertEqual(self.sulfuras.quality, Sulfuras().quality)
 
     def test_aged_brie_quality_goes_up(self):
         self.assertEqual(self.aged_brie.quality, self.initial_quality + 1)
