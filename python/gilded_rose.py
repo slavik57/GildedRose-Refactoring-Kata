@@ -30,15 +30,21 @@ class GildedRose(object):
     def increase_item_quality(item):
         if item.quality >= MAX_ITEM_QUALITY:
             return
-        
-        item.quality = item.quality + 1
+
         if item.name == "Backstage passes to a TAFKAL80ETC concert":
-            if item.sell_in < 11:
-                if item.quality < MAX_ITEM_QUALITY:
-                    item.quality = item.quality + 1
-            if item.sell_in < 6:
-                if item.quality < MAX_ITEM_QUALITY:
-                    item.quality = item.quality + 1
+            GildedRose.increase_backstage_passes_quality(item)
+        else:
+            item.quality = item.quality + 1
+
+    @staticmethod
+    def increase_backstage_passes_quality(item):
+        item.quality = item.quality + 1
+        if item.sell_in < 11:
+            if item.quality < MAX_ITEM_QUALITY:
+                item.quality = item.quality + 1
+        if item.sell_in < 6:
+            if item.quality < MAX_ITEM_QUALITY:
+                item.quality = item.quality + 1
 
     @staticmethod
     def regular_item_decrease_quality(item):
