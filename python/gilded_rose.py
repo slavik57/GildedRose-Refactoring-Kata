@@ -33,14 +33,14 @@ class GildedRose(object):
 
     @staticmethod
     def update_after_sell_in_date(item, item_aging):
-        if item.name != "Aged Brie":
-            if item.name != "Backstage passes to a TAFKAL80ETC concert":
-                if item.quality > 0:
-                    if item.name != "Sulfuras, Hand of Ragnaros":
-                        item.quality = item.quality - 1
-        else:
+        if item.name == "Aged Brie":
             if item.quality < MAX_ITEM_QUALITY:
                 item.quality = item.quality + 1
+        else:
+            if item.name != "Backstage passes to a TAFKAL80ETC concert":
+                if item.name != "Sulfuras, Hand of Ragnaros":
+                    if item.quality > 0:
+                        item.quality = item.quality - 1
 
 
 class Item:
