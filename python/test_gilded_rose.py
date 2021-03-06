@@ -24,7 +24,8 @@ class GildedRoseTest(unittest.TestCase):
         gilded_rose.update_quality()
 
     def test_sulfuras_does_not_decrease_quality(self):
-        self.assertEquals(self.sulfuras, Sulfuras())
+        self.assertEquals(self.sulfuras.sell_in, Sulfuras().sell_in)
+        self.assertEquals(self.sulfuras.quality, Sulfuras().quality)
 
     def test_item_lowers_sell_in_and_quality(self):
         self.assertEquals(self.item.sell_in, 9)
