@@ -6,12 +6,14 @@ from aging.sulfuras_aging import SulfurasAging
 
 MAX_ITEM_QUALITY = 50
 
+
 class GildedRose(object):
 
     def __init__(self, items):
         self.item_agers = [self.to_item_aging(item) for item in items]
 
-    def to_item_aging(self, item):
+    @staticmethod
+    def to_item_aging(item):
         if item.name == "Sulfuras, Hand of Ragnaros":
             return SulfurasAging(item)
         if item.name == "Backstage passes to a TAFKAL80ETC concert":
@@ -26,8 +28,6 @@ class GildedRose(object):
 
     def update_item_quality(self, item, item_aging):
         item_aging.age_item_by_day()
-        if item.name != "Sulfuras, Hand of Ragnaros":
-            item.sell_in = item.sell_in - 1
         if item.sell_in < 0:
             self.update_after_sell_in_date(item)
 
@@ -53,5 +53,3 @@ class Item:
 
     def __repr__(self):
         return "%s, %s, %s" % (self.name, self.sell_in, self.quality)
-
-

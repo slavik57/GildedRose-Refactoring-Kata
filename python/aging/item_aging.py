@@ -4,6 +4,7 @@ class ItemAging:
 
     def age_item_by_day(self):
         self._update_quality()
+        self.item.sell_in = self.item.sell_in - 1
 
     def _update_quality(self):
         if self.item.quality > 0:
