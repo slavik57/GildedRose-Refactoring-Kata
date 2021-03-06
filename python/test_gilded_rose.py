@@ -2,6 +2,7 @@
 import unittest
 
 from gilded_rose import GildedRose, Item
+from items.Conjured import Conjured
 from items.aged_brie import AgedBrie
 from items.backstage_passes import BackstagePasses
 from items.sulfuras import Sulfuras
@@ -19,6 +20,7 @@ class GildedRoseTest(unittest.TestCase):
         self.aged_brie = AgedBrie(sell_in=self.initial_sell_in, quality=self.initial_quality)
         self.max_quality = AgedBrie(sell_in=self.initial_sell_in, quality=50)
         self.backstage_passes = BackstagePasses(sell_in=self.initial_sell_in, quality=self.initial_quality)
+        self.conjured = Conjured(sell_in=self.initial_sell_in, quality=self.initial_quality)
 
         self.items = [
             self.item,
@@ -26,7 +28,8 @@ class GildedRoseTest(unittest.TestCase):
             self.item_with_zero_quality,
             self.aged_brie,
             self.max_quality,
-            self.backstage_passes
+            self.backstage_passes,
+            self.conjured
         ]
 
         self.gilded_rose = GildedRose(self.items)
@@ -106,6 +109,18 @@ class GildedRoseTest(unittest.TestCase):
 
         self.update_until_sell_in_is(-11)
         self.assertEqual(self.aged_brie.quality, 50)
+
+    def test_conjured_item_quality(self):
+        self.conjured.quality = 10
+        self.conjured.sell_in = 1
+
+        self.gilded_rose.update_quality()
+        self.assertEqual(self.conjured.sell_in, 0)
+        self.assertEqual(self.conjured.quality, 8)
+
+        self.gilded_rose.update_quality()
+        self.assertEqual(self.conjured.sell_in, -1)
+        self.assertEqual(self.conjured.quality, 4)
 
 if __name__ == '__main__':
     unittest.main()
