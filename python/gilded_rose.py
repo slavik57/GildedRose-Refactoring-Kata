@@ -51,7 +51,7 @@ class GildedRose(object):
 
     @staticmethod
     def regular_item_decrease_quality(item):
-        if (item.quality > 0):
+        if item.quality > 0:
             item.quality = item.quality - 1
 
     @staticmethod
