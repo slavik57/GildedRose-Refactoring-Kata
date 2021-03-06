@@ -37,6 +37,8 @@ class GildedRose(object):
             if item.quality < MAX_ITEM_QUALITY:
                 item.quality = item.quality + 1
         else:
+            if item.name == "Backstage passes to a TAFKAL80ETC concert":
+                item_aging.update_after_sell_in_date()
             if item.name != "Backstage passes to a TAFKAL80ETC concert":
                 if item.name != "Sulfuras, Hand of Ragnaros":
                     if item.quality > 0:
