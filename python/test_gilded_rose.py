@@ -56,20 +56,45 @@ class SulfrasTest(unittest.TestCase):
         self.assertEqual(self.sulfuras.quality, Sulfuras().quality)
 
 
+class AgedBrieTest(unittest.TestCase):
+    def setUp(self) -> None:
+        self.initial_sell_in = 16
+        self.initial_quality = 30
+
+        self.aged_brie = AgedBrie(sell_in=self.initial_sell_in, quality=self.initial_quality)
+        self.max_quality = AgedBrie(sell_in=self.initial_sell_in, quality=50)
+
+        self.items = [
+            self.aged_brie,
+            self.max_quality
+        ]
+
+        self.gilded_rose = GildedRose(self.items)
+        self.gilded_rose.update_quality()
+
+    def test_aged_brie_quality_goes_up(self):
+        self.assertEqual(self.aged_brie.quality, self.initial_quality + 1)
+
+    def test_quality_is_limited(self):
+        self.assertEqual(self.max_quality.quality, 50)
+
+    def test_aged_brie_max_quality(self):
+        while self.max_quality.sell_in > -2:
+            self.gilded_rose.update_quality()
+
+        self.assertEqual(self.aged_brie.quality, 50)
+
+
 class GildedRoseTest(unittest.TestCase):
     def setUp(self) -> None:
         self.initial_sell_in = 16
         self.current_sell_in = self.initial_sell_in
         self.initial_quality = 30
 
-        self.aged_brie = AgedBrie(sell_in=self.initial_sell_in, quality=self.initial_quality)
-        self.max_quality = AgedBrie(sell_in=self.initial_sell_in, quality=50)
         self.backstage_passes = BackstagePasses(sell_in=self.initial_sell_in, quality=self.initial_quality)
         self.conjured = Conjured(sell_in=self.initial_sell_in, quality=self.initial_quality)
 
         self.items = [
-            self.aged_brie,
-            self.max_quality,
             self.backstage_passes,
             self.conjured
         ]
@@ -81,12 +106,6 @@ class GildedRoseTest(unittest.TestCase):
         while self.current_sell_in > target_sell_in:
             self.gilded_rose.update_quality()
             self.current_sell_in -= 1
-
-    def test_aged_brie_quality_goes_up(self):
-        self.assertEqual(self.aged_brie.quality, self.initial_quality + 1)
-
-    def test_quality_is_limited(self):
-        self.assertEqual(self.max_quality.quality, 50)
 
     def test_backstage_passes(self):
         self.assertEqual(self.backstage_passes.sell_in, self.initial_sell_in - 1)
@@ -122,13 +141,6 @@ class GildedRoseTest(unittest.TestCase):
 
         self.update_until_sell_in_is(0)
         self.assertEqual(self.backstage_passes.quality, 50)
-
-    def test_aged_brie_max_quality(self):
-        self.update_until_sell_in_is(-10)
-        self.assertEqual(self.aged_brie.quality, 50)
-
-        self.update_until_sell_in_is(-11)
-        self.assertEqual(self.aged_brie.quality, 50)
 
     def test_conjured_item_quality(self):
         self.conjured.quality = 10
