@@ -25,8 +25,8 @@ class GildedRoseTest(unittest.TestCase):
             self.backstage_passes
         ]
 
-        gilded_rose = GildedRose(self.items)
-        gilded_rose.update_quality()
+        self.gilded_rose = GildedRose(self.items)
+        self.gilded_rose.update_quality()
 
     def test_sulfuras_does_not_decrease_quality(self):
         self.assertEquals(self.sulfuras.sell_in, Sulfuras().sell_in)
@@ -48,6 +48,14 @@ class GildedRoseTest(unittest.TestCase):
     def test_backstage_passes(self):
         self.assertEquals(self.backstage_passes.sell_in, 15)
         self.assertEquals(self.backstage_passes.quality, 5)
+
+    def test_backstage_passes_with_10_left_days(self):
+        self.backstage_passes.sell_in = 10
+        self.backstage_passes.quality = 4
+        self.gilded_rose.update_quality()
+
+        self.assertEquals(self.backstage_passes.sell_in, 9)
+        self.assertEquals(self.backstage_passes.quality, 6)
 
 if __name__ == '__main__':
     unittest.main()
