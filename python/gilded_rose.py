@@ -38,13 +38,16 @@ class GildedRose(object):
 
     @staticmethod
     def increase_backstage_passes_quality(item):
-        item.quality = item.quality + 1
-        if item.sell_in < 11:
-            if item.quality < MAX_ITEM_QUALITY:
-                item.quality = item.quality + 1
         if item.sell_in < 6:
-            if item.quality < MAX_ITEM_QUALITY:
-                item.quality = item.quality + 1
+            GildedRose.increase_quality_by(item, 3)
+        elif item.sell_in < 11:
+            GildedRose.increase_quality_by(item, 2)
+        else:
+            GildedRose.increase_quality_by(item, 1)
+
+    @staticmethod
+    def increase_quality_by(item, quality_to_add):
+        item.quality = min(item.quality + quality_to_add, MAX_ITEM_QUALITY)
 
     @staticmethod
     def regular_item_decrease_quality(item):
