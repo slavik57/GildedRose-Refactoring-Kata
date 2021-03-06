@@ -12,3 +12,6 @@ class BackstagePassImprover(ItemImprover):
             self._increase_quality_by(2)
         else:
             self._increase_quality_by(1)
+
+    def _update_after_sell_in_date(self):
+        self.item.quality = 0

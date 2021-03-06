@@ -29,17 +29,15 @@ class GildedRose(object):
     def update_item_quality(self, item, item_aging):
         item_aging.age_item_by_day()
         if item.sell_in < 0:
-            self.update_after_sell_in_date(item)
+            self.update_after_sell_in_date(item, item_aging)
 
     @staticmethod
-    def update_after_sell_in_date(item):
+    def update_after_sell_in_date(item, item_aging):
         if item.name != "Aged Brie":
             if item.name != "Backstage passes to a TAFKAL80ETC concert":
                 if item.quality > 0:
                     if item.name != "Sulfuras, Hand of Ragnaros":
                         item.quality = item.quality - 1
-            else:
-                item.quality = item.quality - item.quality
         else:
             if item.quality < MAX_ITEM_QUALITY:
                 item.quality = item.quality + 1
