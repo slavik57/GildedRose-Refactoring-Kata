@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+MAX_ITEM_QUALITY = 50
+
 class GildedRose(object):
 
     def __init__(self, items):
@@ -26,14 +28,14 @@ class GildedRose(object):
 
     @staticmethod
     def increase_item_quality(item):
-        if item.quality < 50:
+        if item.quality < MAX_ITEM_QUALITY:
             item.quality = item.quality + 1
             if item.name == "Backstage passes to a TAFKAL80ETC concert":
                 if item.sell_in < 11:
-                    if item.quality < 50:
+                    if item.quality < MAX_ITEM_QUALITY:
                         item.quality = item.quality + 1
                 if item.sell_in < 6:
-                    if item.quality < 50:
+                    if item.quality < MAX_ITEM_QUALITY:
                         item.quality = item.quality + 1
 
     @staticmethod
@@ -51,7 +53,7 @@ class GildedRose(object):
             else:
                 item.quality = item.quality - item.quality
         else:
-            if item.quality < 50:
+            if item.quality < MAX_ITEM_QUALITY:
                 item.quality = item.quality + 1
 
 
