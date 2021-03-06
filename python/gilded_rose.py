@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from item_manipulator import ItemManipulator
 
 MAX_ITEM_QUALITY = 50
 
@@ -6,6 +7,7 @@ class GildedRose(object):
 
     def __init__(self, items):
         self.items = items
+        self.manipulators = [ItemManipulator(item) for item in items]
 
     def update_quality(self):
         for item in self.items:
