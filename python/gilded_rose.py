@@ -4,6 +4,12 @@ from aging.item_aging import ItemAging
 from aging.item_improver import ItemImprover
 from aging.sulfuras_aging import SulfurasAging
 
+agers_factories = {
+    "Sulfuras, Hand of Ragnaros": SulfurasAging,
+    "Backstage passes to a TAFKAL80ETC concert": BackstagePassImprover,
+    "Aged Brie": ItemImprover
+}
+
 
 class GildedRose(object):
 
@@ -12,12 +18,9 @@ class GildedRose(object):
 
     @staticmethod
     def to_item_aging(item):
-        if item.name == "Sulfuras, Hand of Ragnaros":
-            return SulfurasAging(item)
-        if item.name == "Backstage passes to a TAFKAL80ETC concert":
-            return BackstagePassImprover(item)
-        if item.name == "Aged Brie":
-            return ItemImprover(item)
+        if item.name in agers_factories:
+            return agers_factories[item.name](item)
+
         return ItemAging(item)
 
     def update_quality(self):
