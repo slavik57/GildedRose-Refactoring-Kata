@@ -37,3 +37,4 @@ V - backstage passes quality for 10 left days or less increases by 2
 V - backstage passes quality for 5 left days or less increases by 3
 V - backstage passes quality drops to 0 when days left is 0
 V - item quality degrades by 2 after sell date
+V - sulfuras quality is always 80

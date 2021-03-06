@@ -38,6 +38,7 @@ class GildedRoseTest(unittest.TestCase):
             self.current_sell_in -= 1
 
     def test_sulfuras_does_not_decrease_quality(self):
+        self.assertEqual(Sulfuras().quality, 80)
         self.assertEqual(self.sulfuras.sell_in, Sulfuras().sell_in)
         self.assertEqual(self.sulfuras.quality, Sulfuras().quality)
 
