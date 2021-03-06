@@ -34,8 +34,7 @@ class GildedRose(object):
     @staticmethod
     def update_after_sell_in_date(item, item_aging):
         if item.name == "Aged Brie":
-            if item.quality < MAX_ITEM_QUALITY:
-                item.quality = item.quality + 1
+            item_aging.update_after_sell_in_date()
         else:
             if item.name == "Backstage passes to a TAFKAL80ETC concert":
                 item_aging.update_after_sell_in_date()
