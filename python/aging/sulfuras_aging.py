@@ -5,5 +5,8 @@ class SulfurasAging(ItemAging):
     def __init__(self, item):
         super(SulfurasAging, self).__init__(item)
 
-    def age_item_by_day(self):
+    def _update_sell_in(self):
+        pass
+
+    def _update_quality(self):
         pass
