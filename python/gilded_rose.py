@@ -28,13 +28,10 @@ class GildedRose(object):
 
     @staticmethod
     def increase_item_quality(item):
-        if item.quality >= MAX_ITEM_QUALITY:
-            return
-
         if item.name == "Backstage passes to a TAFKAL80ETC concert":
             GildedRose.increase_backstage_passes_quality(item)
         else:
-            item.quality = item.quality + 1
+            GildedRose.increase_quality_by(item, 1)
 
     @staticmethod
     def increase_backstage_passes_quality(item):
