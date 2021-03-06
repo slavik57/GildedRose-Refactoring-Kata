@@ -10,5 +10,7 @@ class ItemAging:
         self.item.sell_in = self.item.sell_in - 1
 
     def _update_quality(self):
-        if self.item.quality > 0:
-            self.item.quality = self.item.quality - 1
+        self._reduce_quality_by(1)
+
+    def _reduce_quality_by(self, amount):
+        self.item.quality = max(0, self.item.quality - amount)
