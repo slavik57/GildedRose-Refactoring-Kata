@@ -6,12 +6,11 @@ MAX_ITEM_QUALITY = 50
 class GildedRose(object):
 
     def __init__(self, items):
-        self.items = items
         self.item_agers = [ItemAging(item) for item in items]
 
     def update_quality(self):
-        for item in self.items:
-            self.update_item_quality(item)
+        for item_aging in self.item_agers:
+            self.update_item_quality(item_aging.item)
 
     @staticmethod
     def is_quality_increasing_item(item):
