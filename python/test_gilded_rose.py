@@ -11,7 +11,7 @@ class GildedRoseTest(unittest.TestCase):
     def setUp(self) -> None:
         self.initial_sell_in = 16
         self.current_sell_in = self.initial_sell_in
-        self.initial_quality = 20
+        self.initial_quality = 30
 
         self.item = Item("Some item", sell_in=self.initial_sell_in, quality=self.initial_quality)
         self.sulfuras = Sulfuras()
@@ -92,6 +92,13 @@ class GildedRoseTest(unittest.TestCase):
         self.update_until_sell_in_is(-1)
         self.assertEqual(self.item.sell_in, -1)
         self.assertEqual(self.item.quality, current_quality - 2)
+
+    def test_backstage_passes_max_quality(self):
+        self.update_until_sell_in_is(1)
+        self.assertEqual(self.backstage_passes.quality, 50)
+
+        self.update_until_sell_in_is(0)
+        self.assertEqual(self.backstage_passes.quality, 50)
 
 if __name__ == '__main__':
     unittest.main()
