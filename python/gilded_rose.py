@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from item_aging import ItemAging
+from aging.item_aging import ItemAging
 
 MAX_ITEM_QUALITY = 50
 
