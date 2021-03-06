@@ -2,6 +2,7 @@
 from aging.backstage_pass_improver import BackstagePassImprover
 from aging.item_aging import ItemAging
 from aging.item_improver import ItemImprover
+from aging.sulfuras_aging import SulfurasAging
 
 MAX_ITEM_QUALITY = 50
 
@@ -11,6 +12,8 @@ class GildedRose(object):
         self.item_agers = [self.to_item_aging(item) for item in items]
 
     def to_item_aging(self, item):
+        if item.name == "Sulfuras, Hand of Ragnaros":
+            return SulfurasAging(item)
         if item.name == "Backstage passes to a TAFKAL80ETC concert":
             return BackstagePassImprover(item)
         if GildedRose.is_quality_increasing_item(item):
