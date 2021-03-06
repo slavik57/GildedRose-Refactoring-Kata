@@ -38,50 +38,49 @@ class GildedRoseTest(unittest.TestCase):
             self.current_sell_in -= 1
 
     def test_sulfuras_does_not_decrease_quality(self):
-        self.assertEquals(self.sulfuras.sell_in, Sulfuras().sell_in)
-        self.assertEquals(self.sulfuras.quality, Sulfuras().quality)
+        self.assertEqual(self.sulfuras.sell_in, Sulfuras().sell_in)
+        self.assertEqual(self.sulfuras.quality, Sulfuras().quality)
 
     def test_item_lowers_sell_in_and_quality(self):
-        self.assertEquals(self.item.sell_in, self.initial_sell_in - 1)
-        self.assertEquals(self.item.quality, self.initial_quality - 1)
+        self.assertEqual(self.item.sell_in, self.initial_sell_in - 1)
+        self.assertEqual(self.item.quality, self.initial_quality - 1)
 
     def test_quality_is_not_negative(self):
-        self.assertEquals(self.item_with_zero_quality.quality, 0)
+        self.assertEqual(self.item_with_zero_quality.quality, 0)
 
     def test_aged_brie_quality_goes_up(self):
-        self.assertEquals(self.aged_brie.quality, self.initial_quality + 1)
+        self.assertEqual(self.aged_brie.quality, self.initial_quality + 1)
 
     def test_quality_is_limited(self):
-        self.assertEquals(self.max_quality.quality, 50)
+        self.assertEqual(self.max_quality.quality, 50)
 
     def test_backstage_passes(self):
-        self.assertEquals(self.backstage_passes.sell_in, self.initial_sell_in - 1)
-        self.assertEquals(self.backstage_passes.quality, self.initial_quality + 1)
+        self.assertEqual(self.backstage_passes.sell_in, self.initial_sell_in - 1)
+        self.assertEqual(self.backstage_passes.quality, self.initial_quality + 1)
 
     def test_backstage_passes_with_10_left_days(self):
         self.update_until_sell_in_is(10)
         current_quality = self.backstage_passes.quality
         self.update_until_sell_in_is(9)
 
-        self.assertEquals(self.backstage_passes.sell_in, 9)
-        self.assertEquals(self.backstage_passes.quality, current_quality + 2)
+        self.assertEqual(self.backstage_passes.sell_in, 9)
+        self.assertEqual(self.backstage_passes.quality, current_quality + 2)
 
     def test_backstage_passes_with_5_left_days(self):
         self.update_until_sell_in_is(5)
         current_quality = self.backstage_passes.quality
         self.update_until_sell_in_is(4)
 
-        self.assertEquals(self.backstage_passes.sell_in, 4)
-        self.assertEquals(self.backstage_passes.quality, current_quality + 3)
+        self.assertEqual(self.backstage_passes.sell_in, 4)
+        self.assertEqual(self.backstage_passes.quality, current_quality + 3)
 
     def test_backstage_passes_concert_is_over(self):
         self.update_until_sell_in_is(0)
-        current_quality = self.backstage_passes.quality
         self.assertGreater(self.backstage_passes.quality, 0)
         self.gilded_rose.update_quality()
 
-        self.assertEquals(self.backstage_passes.sell_in, -1)
-        self.assertEquals(self.backstage_passes.quality, 0)
+        self.assertEqual(self.backstage_passes.sell_in, -1)
+        self.assertEqual(self.backstage_passes.quality, 0)
 
 
 if __name__ == '__main__':
