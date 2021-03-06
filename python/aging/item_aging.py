@@ -16,4 +16,4 @@ class ItemAging:
         self.item.quality = max(0, self.item.quality - amount)
 
     def update_after_sell_in_date(self):
-        pass
+        self._reduce_quality_by(1)

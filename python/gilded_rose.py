@@ -35,13 +35,10 @@ class GildedRose(object):
     def update_after_sell_in_date(item, item_aging):
         if item.name == "Aged Brie":
             item_aging.update_after_sell_in_date()
-        else:
-            if item.name == "Backstage passes to a TAFKAL80ETC concert":
-                item_aging.update_after_sell_in_date()
-            if item.name != "Backstage passes to a TAFKAL80ETC concert":
-                if item.name != "Sulfuras, Hand of Ragnaros":
-                    if item.quality > 0:
-                        item.quality = item.quality - 1
+        elif item.name == "Backstage passes to a TAFKAL80ETC concert":
+            item_aging.update_after_sell_in_date()
+        elif item.name != "Sulfuras, Hand of Ragnaros":
+            item_aging.update_after_sell_in_date()
 
 
 class Item:
