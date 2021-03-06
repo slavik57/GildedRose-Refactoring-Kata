@@ -12,12 +12,14 @@ class GildedRoseTest(unittest.TestCase):
         self.sulfuras = Sulfuras()
         self.item_with_zero_quality = Item("Zero quality item", sell_in=10, quality=0)
         self.aged_brie = AgedBrie(sell_in=10, quality=11)
+        self.max_quality = AgedBrie(sell_in=10, quality=50)
 
         self.items = [
             self.item,
             self.sulfuras,
             self.item_with_zero_quality,
-            self.aged_brie
+            self.aged_brie,
+            self.max_quality
         ]
 
         gilded_rose = GildedRose(self.items)
@@ -36,6 +38,9 @@ class GildedRoseTest(unittest.TestCase):
 
     def test_aged_brie_quality_goes_up(self):
         self.assertEquals(self.aged_brie.quality, 12)
+
+    def quality_is_limited(self):
+        self.assertEquals(self.max_quality.quality, 50)
 
 if __name__ == '__main__':
     unittest.main()
