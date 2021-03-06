@@ -13,5 +13,5 @@ class ItemImprover(ItemAging):
     def _increase_quality_by(self, quality_to_add):
         self.item.quality = min(self.item.quality + quality_to_add, MAX_ITEM_QUALITY)
 
-    def _update_after_sell_in_date(self):
+    def _update_quality_after_sell_in(self):
         self._increase_quality_by(1)

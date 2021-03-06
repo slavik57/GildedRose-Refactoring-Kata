@@ -11,5 +11,5 @@ class SulfurasAging(ItemAging):
     def _update_quality(self):
         pass
 
-    def _update_after_sell_in_date(self):
+    def _update_quality_after_sell_in(self):
         pass
