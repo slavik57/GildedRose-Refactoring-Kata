@@ -4,8 +4,6 @@ from aging.item_aging import ItemAging
 from aging.item_improver import ItemImprover
 from aging.sulfuras_aging import SulfurasAging
 
-MAX_ITEM_QUALITY = 50
-
 
 class GildedRose(object):
 
