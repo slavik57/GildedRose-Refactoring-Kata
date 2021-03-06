@@ -7,7 +7,7 @@ class ItemImprover(ItemAging):
     def __init__(self, item):
         super(ItemImprover, self).__init__(item)
 
-    def age_item_by_day(self):
+    def _update_quality(self):
         self._increase_quality_by(1)
 
     def _increase_quality_by(self, quality_to_add):
