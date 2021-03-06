@@ -3,6 +3,7 @@ import unittest
 
 from gilded_rose import GildedRose, Item
 from items.aged_brie import AgedBrie
+from items.backstage_passes import BackstagePasses
 from items.sulfuras import Sulfuras
 
 
@@ -13,7 +14,7 @@ class GildedRoseTest(unittest.TestCase):
         self.item_with_zero_quality = Item("Zero quality item", sell_in=10, quality=0)
         self.aged_brie = AgedBrie(sell_in=10, quality=11)
         self.max_quality = AgedBrie(sell_in=10, quality=50)
-        self.backstage_passes = Item("Backstage passes to a TAFKAL80ETC concert", sell_in=16, quality=4)
+        self.backstage_passes = BackstagePasses(sell_in=16, quality=4)
 
         self.items = [
             self.item,
