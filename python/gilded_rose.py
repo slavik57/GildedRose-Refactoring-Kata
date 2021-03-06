@@ -9,8 +9,12 @@ class GildedRose(object):
         for item in self.items:
             self.update_item_quality(item)
 
+    @staticmethod
+    def is_quality_increasing_item(item):
+        return item.name == "Aged Brie" or item.name == "Backstage passes to a TAFKAL80ETC concert"
+
     def update_item_quality(self, item):
-        if item.name == "Aged Brie" or item.name == "Backstage passes to a TAFKAL80ETC concert":
+        if self.is_quality_increasing_item(item):
             if item.quality < 50:
                 item.quality = item.quality + 1
                 if item.name == "Backstage passes to a TAFKAL80ETC concert":
