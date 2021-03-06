@@ -2,6 +2,7 @@
 import unittest
 
 from gilded_rose import GildedRose, Item
+from items.aged_brie import AgedBrie
 from items.sulfuras import Sulfuras
 
 
@@ -10,7 +11,7 @@ class GildedRoseTest(unittest.TestCase):
         self.item = Item("Some item", sell_in=10, quality=4)
         self.sulfuras = Sulfuras()
         self.item_with_zero_quality = Item("Zero quality item", sell_in=10, quality=0)
-        self.aged_brie = Item("Aged Brie", sell_in=10, quality=11)
+        self.aged_brie = AgedBrie(sell_in=10, quality=11)
 
         self.items = [
             self.item,
