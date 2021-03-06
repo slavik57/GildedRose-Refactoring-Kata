@@ -6,9 +6,9 @@ class BackstagePassImprover(ItemImprover):
         super(BackstagePassImprover, self).__init__(item)
 
     def _update_quality(self):
-        if self.item.sell_in < 6:
+        if self.item.sell_in < 5:
             self._increase_quality_by(3)
-        elif self.item.sell_in < 11:
+        elif self.item.sell_in < 10:
             self._increase_quality_by(2)
         else:
             self._increase_quality_by(1)

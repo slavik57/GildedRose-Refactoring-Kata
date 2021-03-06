@@ -3,8 +3,8 @@ class ItemAging:
         self.item = item
 
     def age_item_by_day(self):
-        self._update_quality()
         self._update_sell_in()
+        self._update_quality()
 
         if self.item.sell_in < 0:
             self._update_quality_after_sell_in()
