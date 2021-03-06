@@ -74,5 +74,15 @@ class GildedRoseTest(unittest.TestCase):
         self.assertEquals(self.backstage_passes.sell_in, 4)
         self.assertEquals(self.backstage_passes.quality, current_quality + 3)
 
+    def test_backstage_passes_concert_is_over(self):
+        self.update_until_sell_in_is(0)
+        current_quality = self.backstage_passes.quality
+        self.assertGreater(self.backstage_passes.quality, 0)
+        self.gilded_rose.update_quality()
+
+        self.assertEquals(self.backstage_passes.sell_in, -1)
+        self.assertEquals(self.backstage_passes.quality, 0)
+
+
 if __name__ == '__main__':
     unittest.main()
