@@ -2,7 +2,7 @@
 + All items have a Quality value which denotes how valuable the item is
 + At the end of each day our system lowers both values for every item
 
-- Once the sell by date has passed, Quality degrades twice as fast
++ Once the sell by date has passed, Quality degrades twice as fast
 + The Quality of an item is never negative
 + "Aged Brie" actually increases in Quality the older it gets
 + The Quality of an item is never more than 50
@@ -36,3 +36,4 @@ V - backstage passes quality
 V - backstage passes quality for 10 left days or less increases by 2
 V - backstage passes quality for 5 left days or less increases by 3
 V - backstage passes quality drops to 0 when days left is 0
+V - item quality degrades by 2 after sell date

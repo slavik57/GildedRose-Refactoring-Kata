@@ -82,6 +82,15 @@ class GildedRoseTest(unittest.TestCase):
         self.assertEqual(self.backstage_passes.sell_in, -1)
         self.assertEqual(self.backstage_passes.quality, 0)
 
+    def test_item_quality_degrades_by_2_after_sell_in(self):
+        self.update_until_sell_in_is(0)
+
+        current_quality = self.item.quality
+        self.assertGreater(current_quality, 0)
+
+        self.update_until_sell_in_is(-1)
+        self.assertEqual(self.item.sell_in, -1)
+        self.assertEqual(self.item.quality, current_quality - 2)
 
 if __name__ == '__main__':
     unittest.main()
