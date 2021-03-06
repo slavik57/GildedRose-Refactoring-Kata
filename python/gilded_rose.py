@@ -33,12 +33,7 @@ class GildedRose(object):
 
     @staticmethod
     def update_after_sell_in_date(item, item_aging):
-        if item.name == "Aged Brie":
-            item_aging.update_after_sell_in_date()
-        elif item.name == "Backstage passes to a TAFKAL80ETC concert":
-            item_aging.update_after_sell_in_date()
-        elif item.name != "Sulfuras, Hand of Ragnaros":
-            item_aging.update_after_sell_in_date()
+        item_aging.update_after_sell_in_date()
 
 
 class Item:
