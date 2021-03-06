@@ -127,37 +127,28 @@ class BackstagePassesTest(unittest.TestCase):
         self.assertEqual(self.max_quality.quality, 50)
 
 
-class GildedRoseTest(unittest.TestCase):
+class ConjuredTest(unittest.TestCase):
     def setUp(self) -> None:
         self.initial_sell_in = 16
-        self.current_sell_in = self.initial_sell_in
         self.initial_quality = 30
 
         self.conjured = Conjured(sell_in=self.initial_sell_in, quality=self.initial_quality)
+        self.conjured_zero_sell_in = Conjured(sell_in=0, quality=self.initial_quality)
 
         self.items = [
-            self.conjured
+            self.conjured,
+            self.conjured_zero_sell_in
         ]
 
-        self.gilded_rose = GildedRose(self.items)
-        self.update_until_sell_in_is(self.initial_sell_in - 1)
-
-    def update_until_sell_in_is(self, target_sell_in):
-        while self.current_sell_in > target_sell_in:
-            self.gilded_rose.update_quality()
-            self.current_sell_in -= 1
+        gilded_rose = GildedRose(self.items)
+        gilded_rose.update_quality()
 
     def test_conjured_item_quality(self):
-        self.conjured.quality = 10
-        self.conjured.sell_in = 1
+        self.assertEqual(self.conjured.sell_in, self.initial_sell_in - 1)
+        self.assertEqual(self.conjured.quality, self.initial_quality - 2)
 
-        self.gilded_rose.update_quality()
-        self.assertEqual(self.conjured.sell_in, 0)
-        self.assertEqual(self.conjured.quality, 8)
-
-        self.gilded_rose.update_quality()
-        self.assertEqual(self.conjured.sell_in, -1)
-        self.assertEqual(self.conjured.quality, 4)
+        self.assertEqual(self.conjured_zero_sell_in.sell_in, -1)
+        self.assertEqual(self.conjured_zero_sell_in.quality, self.initial_quality - 4)
 
 
 if __name__ == '__main__':
