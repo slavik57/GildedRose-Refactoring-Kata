@@ -1,12 +1,18 @@
 # -*- coding: utf-8 -*-
 from aging.item_aging import ItemAging
+from aging.item_improver import ItemImprover
 
 MAX_ITEM_QUALITY = 50
 
 class GildedRose(object):
 
     def __init__(self, items):
-        self.item_agers = [ItemAging(item) for item in items]
+        self.item_agers = [self.to_item_aging(item) for item in items]
+
+    def to_item_aging(self, item):
+        if GildedRose.is_quality_increasing_item(item):
+            return ItemImprover(item)
+        return ItemAging(item)
 
     def update_quality(self):
         for item_aging in self.item_agers:
@@ -18,33 +24,13 @@ class GildedRose(object):
 
     def update_item_quality(self, item, item_aging):
         if self.is_quality_increasing_item(item):
-            self.increase_item_quality(item)
+            item_aging.increase_item_quality()
         elif item.name != "Sulfuras, Hand of Ragnaros":
             item_aging.age_item_by_day()
         if item.name != "Sulfuras, Hand of Ragnaros":
             item.sell_in = item.sell_in - 1
         if item.sell_in < 0:
             self.update_after_sell_in_date(item)
-
-    @staticmethod
-    def increase_item_quality(item):
-        if item.name == "Backstage passes to a TAFKAL80ETC concert":
-            GildedRose.increase_backstage_passes_quality(item)
-        else:
-            GildedRose.increase_quality_by(item, 1)
-
-    @staticmethod
-    def increase_backstage_passes_quality(item):
-        if item.sell_in < 6:
-            GildedRose.increase_quality_by(item, 3)
-        elif item.sell_in < 11:
-            GildedRose.increase_quality_by(item, 2)
-        else:
-            GildedRose.increase_quality_by(item, 1)
-
-    @staticmethod
-    def increase_quality_by(item, quality_to_add):
-        item.quality = min(item.quality + quality_to_add, MAX_ITEM_QUALITY)
 
     @staticmethod
     def update_after_sell_in_date(item):
