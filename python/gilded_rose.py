@@ -29,8 +29,7 @@ class GildedRose(object):
         return item.name == "Aged Brie" or item.name == "Backstage passes to a TAFKAL80ETC concert"
 
     def update_item_quality(self, item, item_aging):
-        if self.is_quality_increasing_item(item) or item.name != "Sulfuras, Hand of Ragnaros":
-            item_aging.age_item_by_day()
+        item_aging.age_item_by_day()
         if item.name != "Sulfuras, Hand of Ragnaros":
             item.sell_in = item.sell_in - 1
         if item.sell_in < 0:
