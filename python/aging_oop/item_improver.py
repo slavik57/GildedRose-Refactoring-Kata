@@ -1,6 +1,5 @@
-from aging.item_aging import ItemAging
-
-MAX_ITEM_QUALITY = 50
+from aging import MAX_ITEM_QUALITY
+from .item_aging import ItemAging
 
 
 class ItemImprover(ItemAging):

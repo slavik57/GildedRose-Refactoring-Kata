@@ -1,8 +1,16 @@
 import unittest
 
-from gilded_rose import Item, GildedRose
+from parameterized import parameterized_class
+
+import gilded_rose
+import gilded_rose_functional
+from gilded_rose import Item
 
 
+@parameterized_class([
+    {"gilded_rose_factory": gilded_rose.GildedRose, "name": "OOP"},
+    {"gilded_rose_factory": gilded_rose_functional.GildedRose, "name": "FP"}
+])
 class RegularItemTest(unittest.TestCase):
     def setUp(self) -> None:
         self.initial_sell_in = 16
@@ -18,7 +26,7 @@ class RegularItemTest(unittest.TestCase):
             self.item_with_zero_sell_in
         ]
 
-        gilded_rose = GildedRose(self.items)
+        gilded_rose = self.gilded_rose_factory(self.items)
         gilded_rose.update_quality()
 
     def test_item_lowers_sell_in_and_quality(self):

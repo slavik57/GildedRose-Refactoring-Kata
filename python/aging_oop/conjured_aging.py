@@ -1,4 +1,4 @@
-from aging.item_aging import ItemAging
+from .item_aging import ItemAging
 
 
 class ConjuredAging(ItemAging):

@@ -1,9 +1,16 @@
 import unittest
 
-from gilded_rose import GildedRose
+from parameterized import parameterized_class
+
+import gilded_rose
+import gilded_rose_functional
 from items.sulfuras import Sulfuras
 
 
+@parameterized_class([
+    {"gilded_rose_factory": gilded_rose.GildedRose, "name": "OOP"},
+    {"gilded_rose_factory": gilded_rose_functional.GildedRose, "name": "FP"}
+])
 class SulfrasTest(unittest.TestCase):
     def setUp(self) -> None:
         self.initial_sell_in = 16
@@ -13,7 +20,7 @@ class SulfrasTest(unittest.TestCase):
 
         self.items = [self.sulfuras]
 
-        gilded_rose = GildedRose(self.items)
+        gilded_rose = self.gilded_rose_factory(self.items)
         gilded_rose.update_quality()
 
     def test_sulfuras_does_not_change(self):

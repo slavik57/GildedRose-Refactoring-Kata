@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-from aging.backstage_pass_improver import BackstagePassImprover
-from aging.conjured_aging import ConjuredAging
-from aging.item_aging import ItemAging
-from aging.item_improver import ItemImprover
-from aging.sulfuras_aging import SulfurasAging
+from aging_oop import *
 
 agers_factories = {
     "Sulfuras, Hand of Ragnaros": SulfurasAging,

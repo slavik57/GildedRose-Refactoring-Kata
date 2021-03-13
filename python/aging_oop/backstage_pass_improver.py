@@ -1,4 +1,4 @@
-from aging.item_improver import ItemImprover
+from .item_improver import ItemImprover
 
 
 class BackstagePassImprover(ItemImprover):
