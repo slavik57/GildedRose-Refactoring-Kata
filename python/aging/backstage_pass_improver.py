@@ -1,4 +1,5 @@
-from aging.item_improver import ItemImprover
+from .ager_types import OneDayAger
+from .item_improver import ItemImprover
 
 
 class BackstagePassImprover(ItemImprover):
@@ -15,3 +16,8 @@ class BackstagePassImprover(ItemImprover):
 
     def _update_quality_after_sell_in(self):
         self.item.quality = 0
+
+
+def age_item_by_day(item) -> OneDayAger:
+    item_aging = BackstagePassImprover(item)
+    return lambda: item_aging.age_item_by_day()

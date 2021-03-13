@@ -1,4 +1,5 @@
-from aging.item_aging import ItemAging
+from .item_aging import ItemAging
+from .ager_types import OneDayAger
 
 
 class SulfurasAging(ItemAging):
@@ -13,3 +14,8 @@ class SulfurasAging(ItemAging):
 
     def _update_quality_after_sell_in(self):
         pass
+
+
+def age_item_by_day(item) -> OneDayAger:
+    item_aging = SulfurasAging(item)
+    return lambda: item_aging.age_item_by_day()
