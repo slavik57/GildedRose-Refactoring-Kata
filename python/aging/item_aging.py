@@ -1,5 +1,3 @@
-from typing import List
-
 from items.item import Item
 from .ager_types import OneDayAger, ItemUpdater
 
@@ -36,50 +34,34 @@ def age_item_by_day(item: Item) -> OneDayAger:
     )
 
 
-def _update_sell_in(item: Item) -> None:
-    item.sell_in = item.sell_in - 1
+def _reduce_sell_in_by(amount: int) -> ItemUpdater:
+    def reduce_item_sell_in(item: Item) -> None:
+        item.sell_in = item.sell_in - amount
+
+    return reduce_item_sell_in
 
 
-def _update_quality_before_sell_in(item: Item) -> None:
-    reduce_quality_by(item, 1)
+def reduce_quality_by(amount: int) -> ItemUpdater:
+    def _reduce_item_quality_by(item: Item) -> None:
+        item.quality = max(0, item.quality - amount)
 
-
-def _update_quality_after_sell_in(item: Item) -> None:
-    reduce_quality_by(item, 2)
+    return _reduce_item_quality_by
 
 
 class AgingStrategy:
     def __init__(self,
-                 update_sell_in: ItemUpdater = _update_sell_in,
-                 before_sell_in: ItemUpdater = _update_quality_before_sell_in,
-                 after_sell_in: ItemUpdater = _update_quality_after_sell_in):
+                 update_sell_in: ItemUpdater = _reduce_sell_in_by(1),
+                 before_sell_in: ItemUpdater = reduce_quality_by(1),
+                 after_sell_in: ItemUpdater = reduce_quality_by(2)):
         self.update_sell_in = update_sell_in
         self.before_sell_in = before_sell_in
         self.after_sell_in = after_sell_in
 
 
 def age_item(item: Item, strategy: AgingStrategy) -> None:
-    update_item(item=item,
-                updaters=[
-                    strategy.update_sell_in,
-                    bind_aging_strategy(strategy)
-                ])
+    strategy.update_sell_in(item)
 
-
-def update_item(item: Item, updaters: List[ItemUpdater]) -> None:
-    for updater in updaters:
-        updater(item)
-
-
-def bind_aging_strategy(strategy: AgingStrategy) -> ItemUpdater:
-    def update(item: Item) -> None:
-        if item.sell_in < 0:
-            strategy.after_sell_in(item)
-        else:
-            strategy.before_sell_in(item)
-
-    return update
-
-
-def reduce_quality_by(item: Item, amount: int) -> None:
-    item.quality = max(0, item.quality - amount)
+    if item.sell_in < 0:
+        strategy.after_sell_in(item)
+    else:
+        strategy.before_sell_in(item)
