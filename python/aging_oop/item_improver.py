@@ -1,4 +1,4 @@
-from .ager_types import MAX_ITEM_QUALITY
+from aging import MAX_ITEM_QUALITY
 from .item_aging import ItemAging
 
 
