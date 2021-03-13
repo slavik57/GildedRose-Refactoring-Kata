@@ -1,3 +1,4 @@
+from items.item import Item
 from .ager_types import OneDayAger
 
 
@@ -26,7 +27,30 @@ class ItemAging:
         self.item.quality = max(0, self.item.quality - amount)
 
 
-def age_item_by_day(item) -> OneDayAger:
-    item_aging = ItemAging(item)
+def age_item_by_day(item: Item) -> OneDayAger:
+    return lambda: _age_item_by_day(item)
 
-    return lambda: item_aging.age_item_by_day()
+
+def _age_item_by_day(item: Item):
+    _update_sell_in(item)
+
+    if item.sell_in < 0:
+        _update_quality_after_sell_in(item)
+    else:
+        _update_quality_before_sell_in(item)
+
+
+def _update_sell_in(item: Item):
+    item.sell_in = item.sell_in - 1
+
+
+def _update_quality_before_sell_in(item: Item):
+    _reduce_quality_by(item, 1)
+
+
+def _update_quality_after_sell_in(item: Item):
+    _reduce_quality_by(item, 2)
+
+
+def _reduce_quality_by(item: Item, amount: int):
+    item.quality = max(0, item.quality - amount)
