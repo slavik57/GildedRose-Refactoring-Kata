@@ -1,6 +1,12 @@
 # Solution
 The solution is done using python, in the python directory.
-You can see the history of the solution by viewing the commits
+You can see the history of the solution by viewing the commits.
+There are 2 solutions, using OOP and FP:
+* The OOP solution is called `gilden_rose_oop.py`
+* The FP solution is called `gilden_rose_functional.py`
+
+Both solutions are tested using the same test suite, using parametrized class.
+I used pytest to run the tests.
 
 # Gilded Rose Refactoring Kata
 
