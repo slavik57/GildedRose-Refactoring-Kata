@@ -1,7 +1,7 @@
 from items.item import Item
-from .ager_types import OneDayAger, AgingStrategy
+from .ager_types import OneDayAger
 
-from .item_aging import ItemAging, age_item
+from .item_aging import ItemAging, age_item, AgingStrategy
 
 MAX_ITEM_QUALITY = 50
 

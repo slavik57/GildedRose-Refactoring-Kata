@@ -1,7 +1,7 @@
 from typing import List
 
 from items.item import Item
-from .ager_types import OneDayAger, ItemUpdater, AgingStrategy
+from .ager_types import OneDayAger, ItemUpdater
 
 
 class ItemAging:
@@ -48,9 +48,17 @@ def _update_quality_after_sell_in(item: Item) -> None:
     reduce_quality_by(item, 2)
 
 
-def age_item(item: Item, strategy: AgingStrategy) -> None:
-    strategy = _fill_default_strategies(strategy)
+class AgingStrategy:
+    def __init__(self,
+                 update_sell_in: ItemUpdater = _update_sell_in,
+                 before_sell_in: ItemUpdater = _update_quality_before_sell_in,
+                 after_sell_in: ItemUpdater = _update_quality_after_sell_in):
+        self.update_sell_in = update_sell_in
+        self.before_sell_in = before_sell_in
+        self.after_sell_in = after_sell_in
 
+
+def age_item(item: Item, strategy: AgingStrategy) -> None:
     update_item(item=item,
                 updaters=[
                     strategy.update_sell_in,
@@ -58,27 +66,12 @@ def age_item(item: Item, strategy: AgingStrategy) -> None:
                 ])
 
 
-def _fill_default_strategies(strategy: AgingStrategy) -> AgingStrategy:
-    return AgingStrategy(
-        update_sell_in=_default(value=strategy.update_sell_in, or_default=_update_sell_in),
-        before_sell_in=_default(value=strategy.before_sell_in, or_default=_update_quality_before_sell_in),
-        after_sell_in=_default(value=strategy.after_sell_in, or_default=_update_quality_after_sell_in)
-    )
-
-
-def _default(value, or_default):
-    if value is None:
-        return or_default
-    else:
-        return value
-
-
 def update_item(item: Item, updaters: List[ItemUpdater]) -> None:
     for updater in updaters:
         updater(item)
 
 
-def bind_aging_strategy(strategy: AgingStrategy) -> None:
+def bind_aging_strategy(strategy: AgingStrategy) -> ItemUpdater:
     def update(item: Item) -> None:
         if item.sell_in < 0:
             strategy.after_sell_in(item)

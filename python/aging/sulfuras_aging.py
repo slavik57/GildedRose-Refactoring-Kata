@@ -1,6 +1,6 @@
 from items.item import Item
-from .item_aging import ItemAging, age_item
-from .ager_types import OneDayAger, AgingStrategy
+from .item_aging import ItemAging, age_item, AgingStrategy
+from .ager_types import OneDayAger
 
 
 class SulfurasAging(ItemAging):

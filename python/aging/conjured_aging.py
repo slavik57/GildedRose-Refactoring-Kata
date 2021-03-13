@@ -1,6 +1,6 @@
 from items.item import Item
-from .ager_types import OneDayAger, AgingStrategy
-from .item_aging import ItemAging, reduce_quality_by, age_item
+from .ager_types import OneDayAger
+from .item_aging import ItemAging, reduce_quality_by, age_item, AgingStrategy
 
 
 class ConjuredAging(ItemAging):

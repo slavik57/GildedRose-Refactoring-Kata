@@ -1,7 +1,7 @@
 from items.item import Item
-from .ager_types import OneDayAger, AgingStrategy
+from .ager_types import OneDayAger
 from .item_improver import ItemImprover, increase_quality_by
-from .item_aging import age_item
+from .item_aging import age_item, AgingStrategy
 
 
 class BackstagePassImprover(ItemImprover):
