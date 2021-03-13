@@ -1,40 +1,29 @@
 # -*- coding: utf-8 -*-
-from aging.backstage_pass_improver import BackstagePassImprover
-from aging.conjured_aging import ConjuredAging
-from aging.item_aging import ItemAging
-from aging.item_improver import ItemImprover
-from aging.sulfuras_aging import SulfurasAging
+from aging import *
+from typing import Dict, List
 
-agers_factories = {
-    "Sulfuras, Hand of Ragnaros": SulfurasAging,
-    "Backstage passes to a TAFKAL80ETC concert": BackstagePassImprover,
-    "Aged Brie": ItemImprover,
-    "Conjured": ConjuredAging
+from items.item import Item
+
+AGERS_FACTORIES: Dict[str, OneDayAgerFactory] = {
+    "Sulfuras, Hand of Ragnaros": age_sulfuras_by_day,
+    "Backstage passes to a TAFKAL80ETC concert": age_backstage_pass_by_day,
+    "Aged Brie": improve_item_by_day,
+    "Conjured": age_conjured_by_day
 }
 
 
 class GildedRose(object):
 
-    def __init__(self, items):
-        self.item_agers = [self.to_item_aging(item) for item in items]
+    def __init__(self, items: List[Item]):
+        self.agers: List[OneDayAger] = [self._to_item_aging(item) for item in items]
 
     @staticmethod
-    def to_item_aging(item):
-        if item.name in agers_factories:
-            return agers_factories[item.name](item)
+    def _to_item_aging(item: Item) -> OneDayAger:
+        if item.name in AGERS_FACTORIES:
+            return AGERS_FACTORIES[item.name](item)
 
-        return ItemAging(item)
+        return age_item_by_day(item)
 
     def update_quality(self):
-        for item_aging in self.item_agers:
-            item_aging.age_item_by_day()
-
-
-class Item:
-    def __init__(self, name, sell_in, quality):
-        self.name = name
-        self.sell_in = sell_in
-        self.quality = quality
-
-    def __repr__(self):
-        return "%s, %s, %s" % (self.name, self.sell_in, self.quality)
+        for ager in self.agers:
+            ager()
