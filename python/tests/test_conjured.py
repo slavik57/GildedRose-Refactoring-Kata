@@ -1,9 +1,14 @@
 import unittest
 
+from parameterized import parameterized_class
+
 from gilded_rose import GildedRose
 from items.Conjured import Conjured
 
 
+@parameterized_class([
+    {"gilded_rose_factory": GildedRose, "name": "OOP"}
+])
 class ConjuredTest(unittest.TestCase):
     def setUp(self) -> None:
         self.initial_sell_in = 16
@@ -17,7 +22,7 @@ class ConjuredTest(unittest.TestCase):
             self.conjured_zero_sell_in
         ]
 
-        gilded_rose = GildedRose(self.items)
+        gilded_rose = self.gilded_rose_factory(self.items)
         gilded_rose.update_quality()
 
     def test_conjured_item_quality(self):

@@ -1,9 +1,13 @@
 import unittest
 
+from parameterized import parameterized_class
+
 from gilded_rose import GildedRose
 from items.backstage_passes import BackstagePasses
 
-
+@parameterized_class([
+    {"gilded_rose_factory": GildedRose, "name": "OOP"}
+])
 class BackstagePassesTest(unittest.TestCase):
     def setUp(self) -> None:
         self.initial_sell_in = 16
@@ -23,7 +27,7 @@ class BackstagePassesTest(unittest.TestCase):
             self.max_quality
         ]
 
-        self.gilded_rose = GildedRose(self.items)
+        self.gilded_rose = self.gilded_rose_factory(self.items)
         self.gilded_rose.update_quality()
 
     def test_backstage_passes(self):
