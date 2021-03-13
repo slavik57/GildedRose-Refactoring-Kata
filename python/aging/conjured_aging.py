@@ -1,5 +1,6 @@
+from items.item import Item
 from .ager_types import OneDayAger
-from .item_aging import ItemAging
+from .item_aging import ItemAging, reduce_quality_by, age_item
 
 
 class ConjuredAging(ItemAging):
@@ -14,5 +15,16 @@ class ConjuredAging(ItemAging):
 
 
 def age_item_by_day(item) -> OneDayAger:
-    item_aging = ConjuredAging(item)
-    return lambda: item_aging.age_item_by_day()
+    return lambda: age_item(
+        item=item,
+        before_sell_in=_update_quality_before_sell_in,
+        after_sell_in=_update_quality_after_sell_in
+    )
+
+
+def _update_quality_before_sell_in(item: Item) -> None:
+    reduce_quality_by(item, 2)
+
+
+def _update_quality_after_sell_in(item: Item) -> None:
+    reduce_quality_by(item, 4)

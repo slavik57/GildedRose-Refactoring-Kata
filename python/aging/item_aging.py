@@ -49,12 +49,12 @@ def _update_sell_in(item: Item) -> None:
 
 
 def _update_quality_before_sell_in(item: Item) -> None:
-    _reduce_quality_by(item, 1)
+    reduce_quality_by(item, 1)
 
 
 def _update_quality_after_sell_in(item: Item) -> None:
-    _reduce_quality_by(item, 2)
+    reduce_quality_by(item, 2)
 
 
-def _reduce_quality_by(item: Item, amount: int) -> None:
+def reduce_quality_by(item: Item, amount: int) -> None:
     item.quality = max(0, item.quality - amount)
