@@ -1,4 +1,5 @@
-from .item_aging import ItemAging
+from items.item import Item
+from .item_aging import ItemAging, age_item
 from .ager_types import OneDayAger
 
 
@@ -16,6 +17,12 @@ class SulfurasAging(ItemAging):
         pass
 
 
-def age_item_by_day(item) -> OneDayAger:
-    item_aging = SulfurasAging(item)
-    return lambda: item_aging.age_item_by_day()
+def age_item_by_day(item: Item) -> OneDayAger:
+    def noop(_item: Item): pass
+
+    return lambda: age_item(
+        item=item,
+        before_sell_in=noop,
+        update_sell_in=noop,
+        after_sell_in=noop
+    )

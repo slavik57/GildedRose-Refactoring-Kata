@@ -35,17 +35,22 @@ def age_item_by_day(item: Item) -> OneDayAger:
     )
 
 
-def age_item(item: Item, before_sell_in: ItemUpdater, after_sell_in: ItemUpdater):
-    _update_sell_in(item)
+def _update_sell_in(item: Item) -> None:
+    item.sell_in = item.sell_in - 1
+
+
+def age_item(
+        item: Item,
+        before_sell_in: ItemUpdater,
+        after_sell_in: ItemUpdater,
+        update_sell_in: ItemUpdater = _update_sell_in
+):
+    update_sell_in(item)
 
     if item.sell_in < 0:
         after_sell_in(item)
     else:
         before_sell_in(item)
-
-
-def _update_sell_in(item: Item) -> None:
-    item.sell_in = item.sell_in - 1
 
 
 def _update_quality_before_sell_in(item: Item) -> None:
