@@ -1,5 +1,5 @@
 from items.item import Item
-from .ager_types import OneDayAger
+from .ager_types import OneDayAger, AgingStrategy
 
 from .item_aging import ItemAging, age_item
 
@@ -23,8 +23,8 @@ class ItemImprover(ItemAging):
 def age_item_by_day(item) -> OneDayAger:
     return lambda: age_item(
         item=item,
-        before_sell_in=_update_quality_before_sell_in,
-        after_sell_in=_update_quality_after_sell_in
+        strategy=AgingStrategy(before_sell_in=_update_quality_before_sell_in,
+                               after_sell_in=_update_quality_after_sell_in)
     )
 
 

@@ -1,6 +1,6 @@
 from items.item import Item
 from .item_aging import ItemAging, age_item
-from .ager_types import OneDayAger
+from .ager_types import OneDayAger, AgingStrategy
 
 
 class SulfurasAging(ItemAging):
@@ -22,7 +22,7 @@ def age_item_by_day(item: Item) -> OneDayAger:
 
     return lambda: age_item(
         item=item,
-        before_sell_in=noop,
-        update_sell_in=noop,
-        after_sell_in=noop
+        strategy=AgingStrategy(before_sell_in=noop,
+                               update_sell_in=noop,
+                               after_sell_in=noop)
     )

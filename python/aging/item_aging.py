@@ -1,5 +1,7 @@
+from typing import List
+
 from items.item import Item
-from .ager_types import OneDayAger, ItemUpdater
+from .ager_types import OneDayAger, ItemUpdater, AgingStrategy
 
 
 class ItemAging:
@@ -28,7 +30,10 @@ class ItemAging:
 
 
 def age_item_by_day(item: Item) -> OneDayAger:
-    return lambda: age_item(item=item)
+    return lambda: age_item(
+        item=item,
+        strategy=AgingStrategy()
+    )
 
 
 def _update_sell_in(item: Item) -> None:
@@ -43,16 +48,34 @@ def _update_quality_after_sell_in(item: Item) -> None:
     reduce_quality_by(item, 2)
 
 
-def age_item(item: Item,
-             before_sell_in: ItemUpdater = _update_quality_before_sell_in,
-             after_sell_in: ItemUpdater = _update_quality_after_sell_in,
-             update_sell_in: ItemUpdater = _update_sell_in):
-    update_sell_in(item)
+def age_item(item: Item, strategy: AgingStrategy) -> None:
+    if strategy.update_sell_in is None:
+        strategy.update_sell_in = _update_sell_in
+    if strategy.before_sell_in is None:
+        strategy.before_sell_in = _update_quality_before_sell_in
+    if strategy.after_sell_in is None:
+        strategy.after_sell_in = _update_quality_after_sell_in
 
-    if item.sell_in < 0:
-        after_sell_in(item)
-    else:
-        before_sell_in(item)
+    update_item(item=item,
+                updaters=[
+                    strategy.update_sell_in,
+                    bind_aging_strategy(strategy)
+                ])
+
+
+def update_item(item: Item, updaters: List[ItemUpdater]) -> None:
+    for updater in updaters:
+        updater(item)
+
+
+def bind_aging_strategy(strategy: AgingStrategy) -> None:
+    def update(item: Item) -> None:
+        if item.sell_in < 0:
+            strategy.after_sell_in(item)
+        else:
+            strategy.before_sell_in(item)
+
+    return update
 
 
 def reduce_quality_by(item: Item, amount: int) -> None:
