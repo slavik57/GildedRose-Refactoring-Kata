@@ -24,7 +24,7 @@ def age_item_by_day(item: Item) -> OneDayAger:
     return lambda: age_item(
         item=item,
         strategy=AgingStrategy(before_sell_in=_increase_quality_based_on_sell_in,
-                               after_sell_in=_set_zero_quality
+                               after_sell_in=_set_quality_to_0
                                )
     )
 
@@ -40,5 +40,5 @@ def _increase_quality_based_on_sell_in(item: Item) -> None:
     increase_quality(item)
 
 
-def _set_zero_quality(item: Item) -> None:
+def _set_quality_to_0(item: Item) -> None:
     item.quality = 0
