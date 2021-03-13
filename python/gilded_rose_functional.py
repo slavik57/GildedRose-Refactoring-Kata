@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from aging import OneDayAgerFactory, OneDayAger
+from aging import *
 from aging_functional import *
-from typing import Dict, List
+from typing import *
 
 from items.item import Item
 

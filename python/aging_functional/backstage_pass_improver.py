@@ -1,5 +1,5 @@
+from aging import *
 from items.item import Item
-from aging import OneDayAger, ItemUpdater
 from .item_improver import increase_quality_by
 from .item_aging import age_item, AgingStrategy
 

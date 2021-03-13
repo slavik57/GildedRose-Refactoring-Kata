@@ -1,4 +1,4 @@
-from aging import OneDayAger
+from aging import *
 from .item_aging import reduce_quality_by, age_item, AgingStrategy
 
 
