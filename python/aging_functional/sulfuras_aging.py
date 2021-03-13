@@ -1,4 +1,4 @@
-from items.item import Item
+from items import Item
 from .item_aging import age_item, AgingStrategy
 from aging import OneDayAger
 

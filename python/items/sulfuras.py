@@ -1,4 +1,4 @@
-from gilded_rose import Item
+from .item import Item
 
 
 class Sulfuras(Item):

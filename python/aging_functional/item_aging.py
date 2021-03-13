@@ -1,5 +1,5 @@
 from aging import *
-from items.item import Item
+from items import Item
 
 
 def age_item_by_day(item: Item) -> OneDayAger:
