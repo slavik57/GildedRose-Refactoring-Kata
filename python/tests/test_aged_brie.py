@@ -2,12 +2,14 @@ import unittest
 
 from parameterized import parameterized_class
 
-from gilded_rose import GildedRose
+import gilded_rose
+import gilded_rose_functional
 from items.aged_brie import AgedBrie
 
 
 @parameterized_class([
-    {"gilded_rose_factory": GildedRose, "name": "OOP"}
+    {"gilded_rose_factory": gilded_rose.GildedRose, "name": "OOP"},
+    {"gilded_rose_factory": gilded_rose_functional.GildedRose, "name": "FP"}
 ])
 class AgedBrieTest(unittest.TestCase):
     def setUp(self) -> None:
