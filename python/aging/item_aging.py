@@ -49,18 +49,28 @@ def _update_quality_after_sell_in(item: Item) -> None:
 
 
 def age_item(item: Item, strategy: AgingStrategy) -> None:
-    if strategy.update_sell_in is None:
-        strategy.update_sell_in = _update_sell_in
-    if strategy.before_sell_in is None:
-        strategy.before_sell_in = _update_quality_before_sell_in
-    if strategy.after_sell_in is None:
-        strategy.after_sell_in = _update_quality_after_sell_in
+    strategy = _fill_default_strategies(strategy)
 
     update_item(item=item,
                 updaters=[
                     strategy.update_sell_in,
                     bind_aging_strategy(strategy)
                 ])
+
+
+def _fill_default_strategies(strategy: AgingStrategy) -> AgingStrategy:
+    return AgingStrategy(
+        update_sell_in=_default(value=strategy.update_sell_in, or_default=_update_sell_in),
+        before_sell_in=_default(value=strategy.before_sell_in, or_default=_update_quality_before_sell_in),
+        after_sell_in=_default(value=strategy.after_sell_in, or_default=_update_quality_after_sell_in)
+    )
+
+
+def _default(value, or_default):
+    if value is None:
+        return or_default
+    else:
+        return value
 
 
 def update_item(item: Item, updaters: List[ItemUpdater]) -> None:
